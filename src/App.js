@@ -11,7 +11,7 @@ import BookList from './components/BooksList';
 import { getBooks } from './store/selectors';
 
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

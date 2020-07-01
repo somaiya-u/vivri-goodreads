@@ -2,7 +2,7 @@ import React from "react";
 import Book from './Book';
 import { Pagination, Row } from 'react-bootstrap';
 
-const defaultMaxPerPage = 5;
+export const defaultMaxPerPage = 5;
 let initPageSettings = {
   pageStart : 0,
   pageEnd: defaultMaxPerPage-1,
