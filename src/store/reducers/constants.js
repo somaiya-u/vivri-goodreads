@@ -1391,34 +1391,4 @@ export const books = [
       "description": "",
       "cover": "http://libgen.org/covers/447000/f72ea8af5afe380fa9466d03010296f9-d.jpg"
     },
-    {
-      "id": "871871333333",
-      "title": "test books",
-      "author": "Helene Blowers",
-      "author_firstname": null,
-      "author_lastname": "",
-      "author_middlename": "",
-      "categories": "Компьютеры//Web-дизайн",
-      "volume": "",
-      "year": "2009",
-      "edition": "",
-      "language": "en",
-      "extension": "pdf",
-      "pages": "216",
-      "filesize": "5922392",
-      "md5": "f72ea8af5afe380fa9466d03010296f9",
-      "series": "",
-      "periodical": "",
-      "file_extension": "pdf",
-      "url": "http://bookzz.org/dl/871871/5156b1",
-      "convertTo": {
-        "epub": "http://bookzz.org/cs2/liveconverter/?source=http%3A%2F%2Fdlx.bookzz.org%2Fgenesis%2F447000%2Ff72ea8af5afe380fa9466d03010296f9&input_format=pdf&output_format=EPUB&download=1",
-        "fb2": "http://bookzz.org/cs2/liveconverter/?source=http%3A%2F%2Fdlx.bookzz.org%2Fgenesis%2F447000%2Ff72ea8af5afe380fa9466d03010296f9&input_format=pdf&output_format=FB2&download=1",
-        "mobi": "http://bookzz.org/cs2/liveconverter/?source=http%3A%2F%2Fdlx.bookzz.org%2Fgenesis%2F447000%2Ff72ea8af5afe380fa9466d03010296f9&input_format=pdf&output_format=MOBI&download=1",
-        "txt": "http://bookzz.org/cs2/liveconverter/?source=http%3A%2F%2Fdlx.bookzz.org%2Fgenesis%2F447000%2Ff72ea8af5afe380fa9466d03010296f9&input_format=pdf&output_format=TXT&download=1",
-        "rtf": "http://bookzz.org/cs2/liveconverter/?source=http%3A%2F%2Fdlx.bookzz.org%2Fgenesis%2F447000%2Ff72ea8af5afe380fa9466d03010296f9&input_format=pdf&output_format=RTF&download=1"
-      },
-      "description": "",
-      "cover": "http://libgen.org/covers/447000/f72ea8af5afe380fa9466d03010296f9-d.jpg"
-    }
   ]
