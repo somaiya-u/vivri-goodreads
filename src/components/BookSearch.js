@@ -35,7 +35,7 @@ export class BookSearch extends React.Component {
         <Row className="mt-4">
           <InputGroup className="mb-3">
               <FormControl
-                placeholder="Search GoodReads"
+                placeholder="Ex:Sachin Tendulkar"
                 aria-label="Search GoodReads"
                 aria-describedby="Search GoodReads"
                 value={this.state.input}

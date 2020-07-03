@@ -5,7 +5,7 @@ const getXMLNodeValue = (node) => {
 };
 
 const getMatchedFromList = (list,key,value) => {
-    return list.find(elem=>(elem[key]==value));
+    return list.find(elem=>(elem[key]===value));
 };
 
 export const getBooksInfoFromXml = (response) => {
