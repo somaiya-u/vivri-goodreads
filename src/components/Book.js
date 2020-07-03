@@ -6,21 +6,17 @@ class Book extends React.Component {
     return (
         <Card className="mt-2">
             <Row className="justify-content-center">
-                 <Card.Img variant="top" src="/book.png" style={{width: '150px',height:'150px'}}  />
+                 <Card.Img className="mt-2 book-img" variant="top" src={this.props.item.image_url}  />
             </Row>
             <Card.Body>
                 <Card.Title className="book-info"><b>Book Name:</b><span>{this.props.item.title}</span></Card.Title>
                 
                     <div className="book-info"><b>Author:</b><span>{this.props.item.author}</span></div>
-                    <div className="book-info"><b>Year:</b><span>{this.props.item.year}</span></div>
-                    <div className="book-info"><b>Edition:</b><span>{this.props.item.edition}</span></div>
-                    <div className="text-truncate book-info"><b>Description:</b>{this.props.item.description?this.props.item.description:<span>Not Available</span>}</div>
-                    
-                
+                    <div className="book-info"><b>Year:</b><span>{this.props.item.original_publication_year}</span></div>
+                    <div className="book-info"><b>Average Rating:</b><span>{this.props.item.average_rating}</span></div>
+                    <div className="book-info"><b>Ratings Count:</b><span>{this.props.item.ratings_count}</span></div>
+                    <div className="book-info"><b>Reviews:</b><span>{this.props.item.text_reviews_count}</span></div>
             </Card.Body>
-            <Card.Footer>
-                <small className="text-muted">Last read {Math.floor(Math.random() * (60 - 1) + 1) } mins ago</small>
-            </Card.Footer>
       </Card>
     );
   }

@@ -1,7 +1,9 @@
 import React from "react";
 import {InputGroup,FormControl, Button, Row} from 'react-bootstrap';
+import { connect } from "react-redux";
+import {searchBooks,clearBooks} from '../store/actions/books';
 
-class BookSearch extends React.Component {
+export class BookSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,12 +20,14 @@ class BookSearch extends React.Component {
   }
 
   handleSearch(){
-    this.props.searchClicked(this.state.input.trim());
+    if(this.state.input.trim()){
+      this.props.searchBooks(this.state.input.trim());
+    }
   }
 
   handleClear(){
     this.setState({input: ""});
-    this.props.clearClicked();
+    this.props.clearBooks();
   }
 
   render() {
@@ -47,4 +51,8 @@ class BookSearch extends React.Component {
   }
 }
 
-export default BookSearch;
+export default connect(
+  null,
+  {searchBooks,clearBooks}
+)(BookSearch);
+

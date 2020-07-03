@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 import {App} from '../App';
 import BookSearch from '../components/BookSearch';
 import BookList from '../components/BooksList';
+import Spinner from '../components/Spinner';
 
 
 describe('<App /> Component test suite', () => {
@@ -18,28 +19,16 @@ describe('<App /> Component test suite', () => {
     expect(wrapper.find(BookList)).to.have.lengthOf(1);
   });
 
-  it('<App /> clearClicked method updates state with passed books value ', () => {
-    const testBooks = [{id: 1,title: "name"}];
-    const wrapper = shallow(<App books={testBooks}/>);
-    const instance = wrapper.instance();
-    instance.clearClicked();
-    expect(wrapper.state('books')).equals(testBooks);
+  it('<App /> should not show spinner when showSpinner from props is false', () => {
+    const testProps = {showSpinner: false};
+    const wrapper = shallow(<App {...testProps}/>);
+    expect(wrapper.find(Spinner)).to.have.lengthOf(0);    
   });
 
-  it('<App /> searchClicked method updates state with passed search string', () => {
-    const testBooks = [{id: 1,title: "name"}];
-    const wrapper = shallow(<App books={testBooks}/>);
-    const instance = wrapper.instance();
-    instance.searchClicked('null');
-    expect(wrapper.state('books')).to.have.length(0);
-  });
-
-  it('<App /> searchClicked method updates state with passed search string', () => {
-    const testBooks = [{id: 1,title: "name"}];
-    const wrapper = shallow(<App books={testBooks}/>);
-    const instance = wrapper.instance();
-    instance.searchClicked('name');
-    expect(wrapper.state('books')).deep.equal(testBooks);
+  it('<App /> should  show spinner when showSpinner from props is true', () => {
+    const testProps = {showSpinner: true};
+    const wrapper = shallow(<App {...testProps}/>);
+    expect(wrapper.find(Spinner)).to.have.lengthOf(1);    
   });
 
 });

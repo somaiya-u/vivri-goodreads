@@ -1,103 +1,64 @@
 import React from "react";
+import { connect } from "react-redux";
 import Book from './Book';
 import { Pagination, Row } from 'react-bootstrap';
+import { getBooks } from '../store/selectors';
+import {searchBooks} from '../store/actions/books';
 
-export const defaultMaxPerPage = 5;
-let initPageSettings = {
-  pageStart : 0,
-  pageEnd: defaultMaxPerPage-1,
-  maxResultsPerPage: defaultMaxPerPage
-}
 
-class BookList extends React.Component {
+export class BookList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...initPageSettings,
+      pageNo: 1,
     };
     this.handleNext = this.handleNext.bind(this);
     this.handlePrev = this.handlePrev.bind(this);
     this.handleFirst = this.handleFirst.bind(this);
     this.handleLast = this.handleLast.bind(this);
   }
-  componentDidUpdate(prevProps) {
-    if (prevProps.books !== this.props.books) {
-      this.refresh();
-    }
-  }
-  refresh(){
-    this.handleFirst();
-  }
-  getNoOfBooks(){
-    return this.props.books.length;
-  }
   handleNext(){
-    this.setState((state)=>{
-      let pageStart = state.pageStart+state.maxResultsPerPage;
-      let pageEnd;
-      if(state.pageEnd+state.maxResultsPerPage >= this.getNoOfBooks()){
-        pageEnd = this.getNoOfBooks()-1;
-      }
-      else{
-        pageEnd = state.pageEnd+state.maxResultsPerPage;
-      }
-      return {pageStart,pageEnd}
-    })
+    let pageNo = this.state.pageNo;
+    this.setState({pageNo:pageNo+1});
+    this.props.searchBooks(this.props.queryString,pageNo+1);
   }
   handlePrev(){
-    this.setState((state)=>{
-      let pageEnd = state.pageStart-1;
-      let pageStart;
-      if(state.pageStart-state.maxResultsPerPage < 0){
-        pageStart = 0;
-      }
-      else{
-        pageStart = state.pageStart-state.maxResultsPerPage;
-      }
-      return {pageStart,pageEnd}
-    })
+    let pageNo = this.state.pageNo;
+    this.setState({pageNo:pageNo-1});
+    this.props.searchBooks(this.props.queryString,pageNo-1);
   }
   handleFirst(){
-    if(this.getNoOfBooks() < defaultMaxPerPage){
-      initPageSettings.maxResultsPerPage = this.getNoOfBooks();
-      initPageSettings.pageEnd = this.getNoOfBooks()-1;
-    }
-    else{
-      initPageSettings.maxResultsPerPage = defaultMaxPerPage;
-      initPageSettings.pageEnd =  defaultMaxPerPage-1;
-    }
-    this.setState(initPageSettings);
+    this.setState({pageNo:1});
+    this.props.searchBooks(this.props.queryString,1);
   }
   handleLast(){
-    this.setState((state)=>{
-
-      let pageStart;
-      let pageEnd = this.getNoOfBooks()-1;
-       if(this.getNoOfBooks() % state.maxResultsPerPage === 0){
-          pageStart = this.getNoOfBooks()-state.maxResultsPerPage;
-       }
-       else{
-          pageStart = Math.floor(this.getNoOfBooks()/state.maxResultsPerPage)*state.maxResultsPerPage;
-       }
-       return {pageStart,pageEnd}
-    });
+    let booksPerPage = this.props.books.length;
+    let pageNo;
+    if(this.props.totalResults % booksPerPage === 0){
+      pageNo = this.props.totalResults/booksPerPage;
+    }
+    else{
+      pageNo = Math.floor(this.props.totalResults/booksPerPage)+1;
+    }
+    this.setState({pageNo});
+    this.props.searchBooks(this.props.queryString,pageNo);
   }
   render() {
     return (
       <div >
         <Row className="justify-content-between align-items-center">
-          <div>{this.getNoOfBooks()===0? <div>No Results</div>:<div>Showing results of {this.state.pageStart+1}-{this.state.pageEnd+1} of {this.getNoOfBooks()}</div>}</div>
+          <div>{this.props.totalResults===0? <div>No Results</div>:<div>Showing results of {this.props.resultsStart}-{this.props.resultsEnd} of {this.props.totalResults} books</div>}</div>
           <Pagination>
-            <Pagination.First onClick={this.handleFirst} disabled={this.state.pageStart <= 0}/>
-            <Pagination.Prev  onClick={this.handlePrev} disabled={this.state.pageStart <= 0}/>
-            <Pagination.Next  onClick={this.handleNext} disabled={this.state.pageEnd>=this.getNoOfBooks()-1} />
-            <Pagination.Last  onClick={this.handleLast} disabled={this.state.pageEnd>=this.getNoOfBooks()-1} />
+            <Pagination.First onClick={this.handleFirst} disabled={this.props.resultsStart <= 1}/>
+            <Pagination.Prev  onClick={this.handlePrev} disabled={this.props.resultsStart <= 1}/>
+            <Pagination.Next  onClick={this.handleNext} disabled={this.props.totalResults === this.props.resultsEnd} />
+            <Pagination.Last  onClick={this.handleLast} disabled={this.props.resultsEnd === this.props.totalResults} />
           </Pagination>
         </Row>
         
         <div>
           {
-            this.props.books.slice(this.state.pageStart,this.state.pageEnd+1).map(book=><Book item={book} key={book.id} />)
+            this.props.books.map(book=><Book item={book} key={book.id} />)
           }
         </div>
       </div>
@@ -105,4 +66,17 @@ class BookList extends React.Component {
   }
 }
 
-export default BookList;
+const mapConnectToProps = (state) => {
+  const {resultsStart,resultsEnd,totalResults,queryString} = state.books;
+  return {
+    resultsStart,resultsEnd,totalResults,queryString,
+    books: getBooks(state),
+  };
+};
+
+export default connect(
+  mapConnectToProps,
+  {searchBooks},
+null
+)(BookList);
+
